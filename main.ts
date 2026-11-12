@@ -1,8 +1,8 @@
-import { copyFileSync, mkdirSync } from "node:fs";
+import { mkdir, copyFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = dirname(fileURLToPath(import.meta.url));
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-mkdirSync(outDir, { recursive: true });
-copyFileSync(join(root, "summary.txt"), join(outDir, "entry.txt"));
+const here = dirname(fileURLToPath(import.meta.url));
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+await mkdir(outputDir, { recursive: true });
+await copyFile(join(here, "summary.txt"), join(outDir, "entry.txt"));
